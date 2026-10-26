@@ -1,0 +1,15 @@
+FROM node:22-alpine
+
+RUN apk add --no-cache libc6-compat
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+# El código real llega por volumen; esta copia solo sirve si se ejecuta sin volumen
+COPY . .
+
+EXPOSE 3000 9870 2201
+
+CMD ["npm", "run", "start:dev"]

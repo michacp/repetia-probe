@@ -1,0 +1,24 @@
+name: repetia-probe-dev
+
+services:
+  probe:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: repetia-probe-dev
+    restart: unless-stopped
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: ["npm", "run", "start:dev"]
+    environment:
+      - NODE_ENV=development
+      - HTTP_PORT=3000
+      - TCP_PORTS=9870,2201
+      - TSC_WATCHFILE=PriorityPollingInterval
+      - TSC_WATCHDIRECTORY=DynamicPriorityPolling
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - "3000:3000"
+      - "9870:9870"
+      - "2201:2201"
